@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "272857400045",
+    "project_id": "jagacall-cloud",
+    "storage_bucket": "jagacall-cloud.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272857400045:android:6ec0afd7a278d3ec10c2e4",
+        "android_client_info": {
+          "package_name": "com.example.jagacall_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE9YcXFt9tcudVCPLmI4KU_F3h0F1ToZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
