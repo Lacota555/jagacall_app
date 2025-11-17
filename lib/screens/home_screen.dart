@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-// import 'package:jagacall_app/models/contact_model.dart';
-// import 'package:jagacall_app/utils/device_info.dart';
 import '../services/contact_service.dart';
-import '../services/firebase_service.dart';
 import '../utils/permission_handler.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -24,20 +23,20 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _checkPermissions();
     // Load dummy contacts untuk testing
-    _loadDummyContacts();
+    // _loadDummyContacts();
   }
 
   // METHOD - _loadDummyContacts
-  void _loadDummyContacts() {
-    // Tambahkan dummy contacts untuk testing
-    final dummyContacts = ContactService.getDummyContacts();
-    for (var contact in dummyContacts) {
-      ContactService.addManualContact(contact.name, contact.phoneNumber);
-    }
-    setState(() {
-      _contactCount = ContactService.manualContacts.length;
-    });
-  }
+  // void _loadDummyContacts() {
+  //   // Tambahkan dummy contacts untuk testing
+  //   final dummyContacts = ContactService.getDummyContacts();
+  //   for (var contact in dummyContacts) {
+  //     ContactService.addManualContact(contact.name, contact.phoneNumber);
+  //   }
+  //   setState(() {
+  //     _contactCount = ContactService.manualContacts.length;
+  //   });
+  // }
 
   Future<void> _checkPermissions() async {
     print('🔍 Checking permissions...');
@@ -107,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
   });
 
   try {
-    final result = await ContactService.syncContactsToCloud();
+    final result = await ContactService.syncContactsToAPI();
     
     setState(() {
       _isLoading = false;
@@ -126,28 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 }
-
-  Future<void> _testFirebaseConnection() async {
-    setState(() {
-      _isLoading = true;
-      _status = 'Testing Firebase connection...';
-    });
-
-    try {
-      await FirebaseService.initialize();
-      
-      setState(() {
-        _isLoading = false;
-        _status = '✅ Firebase connected successfully!\n'
-                  'Ready to sync contacts to cloud.';
-      });
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-        _status = '❌ Firebase connection failed: $e';
-      });
-    }
-  }
 
   void _addManualContact() {
     final name = _nameController.text.trim();
@@ -268,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Daftar Kontak Manual'),
-        content: Container(
+        content: SizedBox(
           width: double.maxFinite,
           child: ListView.builder(
             shrinkWrap: true,
@@ -401,17 +378,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   label: Text('Tambah Kontak Manual'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  ),
-                ),
-                SizedBox(height: 10),
-                ElevatedButton.icon(
-                  onPressed: _testFirebaseConnection,
-                  icon: Icon(Icons.cloud),
-                  label: Text('Test Firebase'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.amber,
                     foregroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   ),
